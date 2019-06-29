@@ -22,9 +22,6 @@ kube_api_anonymous_auth: true
 ## Change this to use another Kubernetes version, e.g. a current beta release
 kube_version: v1.14.3
 
-# kubernetes image repo define
-kube_image_repo: "registry.aliyuncs.com/google_containers"
-
 # Where the binaries will be downloaded.
 # Note: ensure that you've enough disk space (about 1G)
 local_release_dir: "/tmp/releases"
@@ -150,18 +147,18 @@ container_manager: docker
 
 ## Settings for containerized control plane (etcd/kubelet/secrets)
 etcd_deployment_type: docker
-kubelet_deployment_type: docker
+kubelet_deployment_type: host
 helm_deployment_type: docker
 
 # Enable kubeadm experimental control plane
-kubeadm_control_plane: false
+kubeadm_control_plane: true
 kubeadm_certificate_key: "{{ lookup('password', credentials_dir + '/kubeadm_certificate_key.creds length=64 chars=hexdigits') | lower }}"
 
 # K8s image pull policy (imagePullPolicy)
 k8s_image_pull_policy: IfNotPresent
 
 # audit log for kubernetes
-kubernetes_audit: false
+kubernetes_audit: true
 
 # dynamic kubelet configuration
 dynamic_kubelet_configuration: false
@@ -172,7 +169,7 @@ default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
 dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
 
 # pod security policy (RBAC must be enabled either by having 'RBAC' in authorization_modes or kubeadm enabled)
-podsecuritypolicy_enabled: false
+podsecuritypolicy_enabled: true
 
 # Make a copy of kubeconfig on the host that runs Ansible in {{ inventory_dir }}/artifacts
 # kubeconfig_localhost: false
@@ -217,6 +214,7 @@ persistent_volumes_enabled: false
 # nvidia_gpu_device_plugin_container: "k8s.gcr.io/nvidia-gpu-device-plugin@sha256:0842734032018be107fa2490c98156992911e3e1f2a21e059ff0105b07dd8e9e"
 
 
+############ 个人后来添加的配置#################
 
 common_required_pkgs:
   - python-httplib2
@@ -226,3 +224,50 @@ common_required_pkgs:
   - bash-completion
   - socat
   - unzip
+
+docker_registry_mirrors:
+   - https://registry.docker-cn.com
+   - https://mirror.aliyuncs.com
+
+# Debian docker-ce repo
+docker_debian_repo_base_url: "https://mirrors.aliyun.com/docker-ce/linux/debian"
+docker_debian_repo_gpgkey: 'https://mirrors.aliyun.com/docker-ce/linux/debian/gpg'
+dockerproject_apt_repo_base_url: 'https://mirrors.aliyun.com/docker-engine/apt/repo'
+dockerproject_apt_repo_gpgkey: 'https://mirrors.aliyun.com/docker-engine/apt/gpg'
+
+# CentOS/RedHat docker-ce repo
+docker_rh_repo_base_url: 'http://mirrors.aliyun.com/docker-ce/linux/centos/7/$basearch/stable'
+docker_rh_repo_gpgkey: 'http://mirrors.aliyun.com/docker-ce/linux/centos/gpg'
+dockerproject_rh_repo_base_url: 'https://mirrors.tuna.tsinghua.edu.cn/docker/yum/repo/centos7'
+dockerproject_rh_repo_gpgkey: 'https://mirrors.tuna.tsinghua.edu.cn/docker/yum/gpg'
+
+helm_stable_repo_url: "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts"
+dashboard_enabled: true
+registry_enabled: false
+ingress_nginx_enabled: true
+cert_manager_enabled: true
+
+kube_image_repo: "registry.aliyuncs.com/google_containers"
+#kube_image_repo: "registry.cn-hangzhou.aliyuncs.com/google_containers"
+#calico_policy_image_repo: "calico/kube-controllers"
+#pod_infra_image_repo: "mirrorgooglecontainers/pause-{{ image_arch }}"
+#kubedns_image_repo: "google_containers/k8s-dns-kube-dns-{{ image_arch }}"
+#dnsmasq_nanny_image_repo: "google_containers/k8s-dns-dnsmasq-nanny-{{ image_arch }}"
+#dnsmasq_sidecar_image_repo: "google_containers/k8s-dns-sidecar-{{ image_arch }}"
+#dnsmasqautoscaler_image_repo: "mirrorgooglecontainers/cluster-proportional-autoscaler-{{ image_arch }}"
+#dnsautoscaler_image_repo: "mirrorgooglecontainers/cluster-proportional-autoscaler-{{ image_arch }}"
+#registry_proxy_image_repo: "google_containers/kube-registry-proxy"
+#dashboard_image_repo: "mirrorgooglecontainers/kubernetes-dashboard-{{ image_arch }}"
+etcd_image_repo: "quay.mirrors.ustc.edu.cn/coreos/etcd"
+flannel_image_repo: "quay.mirrors.ustc.edu.cn/coreos/flannel"
+flannel_cni_image_repo: "quay.mirrors.ustc.edu.cn/coreos/flannel-cni"
+
+
+# 请将将要下载的文件全部放到所有节点对应目录下
+# 现在是凌晨1点，写到这里我真的想来句Fuck GFW !!!!!!!!!
+#kubeadm_download_url: "file:///tmp/kubeadm"
+#cni_download_url: "file:///tmp/cni-plugins-linux-amd64-v0.8.1.tgz"
+#hyperkube_download_url: "file:///tmp/hyperkube"
+#calicoctl_download_url: "file:///tmp/calicoctl-linux-amd64"
+#vault_download_url: "file:///tmp/vault_{{ vault_version }}_linux_{{ image_arch }}.zip"
+#etcd_download_url: "file:///tmp/etcd-{{ etcd_version }}-linux-amd64.tar.gz"
