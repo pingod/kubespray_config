@@ -155,7 +155,7 @@ kubeadm_control_plane: true
 kubeadm_certificate_key: "{{ lookup('password', credentials_dir + '/kubeadm_certificate_key.creds length=64 chars=hexdigits') | lower }}"
 
 # K8s image pull policy (imagePullPolicy)
-k8s_image_pull_policy: Always
+k8s_image_pull_policy: IfNotPresent
 
 # audit log for kubernetes
 kubernetes_audit: true
@@ -172,7 +172,7 @@ dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kube
 podsecuritypolicy_enabled: true
 
 # Make a copy of kubeconfig on the host that runs Ansible in {{ inventory_dir }}/artifacts
-# kubeconfig_localhost: false
+kubeconfig_localhost: true
 # Download kubectl onto the host that runs Ansible in {{ bin_dir }}
 # kubectl_localhost: false
 
@@ -216,6 +216,19 @@ persistent_volumes_enabled: false
 
 ############ 个人后来添加的配置#################
 
+# Auto rotate the kubelet client certificates by requesting new certificates (default is true)
+kubelet_rotate_certificates: true
+
+# When set to true, enables the PodSecurityPolicy admission controller and defines two policies privileged (applying to all resources in kube-system namespace and kubelet) and restricted (applying all other namespaces). Addons deployed in kube-system namespaces are handled. (default is false)
+podsecuritypolicy_enabled: true
+
+# apply kubelet settings only to nodes and not masters
+#kubelet_custom_flags:
+#  - "--eviction-hard=memory.available<100Mi"
+#  - "--eviction-soft-grace-period=memory.available=30s"
+#  - "--eviction-soft=memory.available<300Mi"
+
+
 common_required_pkgs:
   - python-httplib2
   - openssl
@@ -240,6 +253,7 @@ docker_rh_repo_base_url: 'http://mirrors.aliyun.com/docker-ce/linux/centos/7/$ba
 docker_rh_repo_gpgkey: 'http://mirrors.aliyun.com/docker-ce/linux/centos/gpg'
 dockerproject_rh_repo_base_url: 'https://mirrors.tuna.tsinghua.edu.cn/docker/yum/repo/centos7'
 dockerproject_rh_repo_gpgkey: 'https://mirrors.tuna.tsinghua.edu.cn/docker/yum/gpg'
+
 
 helm_stable_repo_url: "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts"
 dashboard_enabled: true
