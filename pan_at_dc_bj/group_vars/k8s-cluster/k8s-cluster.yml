@@ -169,10 +169,10 @@ default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
 dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
 
 # pod security policy (RBAC must be enabled either by having 'RBAC' in authorization_modes or kubeadm enabled)
-podsecuritypolicy_enabled: false
+podsecuritypolicy_enabled: true
 
 # Make a copy of kubeconfig on the host that runs Ansible in {{ inventory_dir }}/artifacts
-kubeconfig_localhost: false
+kubeconfig_localhost: true
 # Download kubectl onto the host that runs Ansible in {{ bin_dir }}
 # kubectl_localhost: false
 
@@ -251,8 +251,9 @@ docker_rh_repo_gpgkey: 'http://mirrors.aliyun.com/docker-ce/linux/centos/gpg'
 dockerproject_rh_repo_base_url: 'https://mirrors.tuna.tsinghua.edu.cn/docker/yum/repo/centos7'
 dockerproject_rh_repo_gpgkey: 'https://mirrors.tuna.tsinghua.edu.cn/docker/yum/gpg'
 
-
+helm_enabled: true
 helm_stable_repo_url: "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts"
+tiller_image_repo: "registry.aliyuncs.com/google_containers/tiller"
 dashboard_enabled: true
 registry_enabled: false
 ingress_nginx_enabled: true
