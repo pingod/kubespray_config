@@ -169,10 +169,10 @@ default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
 dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
 
 # pod security policy (RBAC must be enabled either by having 'RBAC' in authorization_modes or kubeadm enabled)
-podsecuritypolicy_enabled: true
+podsecuritypolicy_enabled: false
 
 # Make a copy of kubeconfig on the host that runs Ansible in {{ inventory_dir }}/artifacts
-kubeconfig_localhost: true
+kubeconfig_localhost: false
 # Download kubectl onto the host that runs Ansible in {{ bin_dir }}
 # kubectl_localhost: false
 
@@ -218,9 +218,6 @@ persistent_volumes_enabled: false
 
 # Auto rotate the kubelet client certificates by requesting new certificates (default is true)
 kubelet_rotate_certificates: true
-
-# When set to true, enables the PodSecurityPolicy admission controller and defines two policies privileged (applying to all resources in kube-system namespace and kubelet) and restricted (applying all other namespaces). Addons deployed in kube-system namespaces are handled. (default is false)
-podsecuritypolicy_enabled: true
 
 # apply kubelet settings only to nodes and not masters
 #kubelet_custom_flags:
