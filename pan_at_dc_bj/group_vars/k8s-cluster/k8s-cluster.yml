@@ -255,7 +255,7 @@ helm_enabled: true
 helm_stable_repo_url: "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts"
 tiller_image_repo: "registry.aliyuncs.com/google_containers/tiller"
 dashboard_enabled: true
-registry_enabled: false
+registry_enabled: true
 ingress_nginx_enabled: true
 cert_manager_enabled: true
 
