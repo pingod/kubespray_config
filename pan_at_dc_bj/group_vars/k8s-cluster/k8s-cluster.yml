@@ -172,6 +172,7 @@ dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kube
 # podsecuritypolicy_enabled - When set to true, enables the PodSecurityPolicy admission controller and defines two policies 
 # privileged (applying to all resources in kube-system namespace and kubelet) and restricted (applying all other namespaces). 
 # Addons deployed in kube-system namespaces are handled.
+# 如果要开启，请确保你对admission controller有全面的了解，否则会造成所有POD无法启动
 # 如果你不知道你在做什么请填false
 podsecuritypolicy_enabled: false
 
