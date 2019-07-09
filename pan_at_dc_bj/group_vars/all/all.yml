@@ -1,0 +1,125 @@
+---
+## Directory where etcd data stored
+etcd_data_dir: /var/lib/etcd
+
+## Experimental kubeadm etcd deployment mode. Available only for new deployment
+etcd_kubeadm_enabled: false
+
+## Directory where the binaries will be installed
+bin_dir: /usr/local/bin
+
+## The access_ip variable is used to define how other nodes should access
+## the node.  This is used in flannel to allow other flannel nodes to see
+## this node for example.  The access_ip is really useful AWS and Google
+## environments where the nodes are accessed remotely by the "public" ip,
+## but don't know about that address themselves.
+# access_ip: 1.1.1.1
+
+
+## External LB example config
+## apiserver_loadbalancer_domain_name: "demo.daocloud.org"
+#loadbalancer_apiserver:
+#  address: 10.252.97.31
+#  port: 6443
+
+## Internal loadbalancers for apiservers
+## 如果你同时开启了kube_proxy_mode: ipvs，那么请看下面描述：
+## 1. 如果开启，请确保ansible的hosts中定义的主机角色正确，如：不能一台主机既是master，又是node，这样会造成k8s组件无法与ApiServer通讯
+## 2. 开启后将会在每台node上安装一个ingress反向代理所有apiserver，并通过iptables的NAT规则将443端口的请求全部转发到ingress所在的ip和端口上
+## 3. 详细的社区描述：https://github.com/kubernetes/kubernetes/issues/66103
+##      上面连接描述了产生这个问题的根本原因在于，iptables chain的顺序，你通过iptables -t nat  -L可以查看到cali-PREROUTING 这个chain在 KUBE-SERVICES 之上
+##      那么经过cali-PREROUTING最终会将流量导到10.233.90.6:443（ingress hostip + port ) 上，so,陷入了一个死循环
+## 4. 个人解决的办法： 
+##        输入 iptables-save |grep 443 得到一条规则如：
+##        -A CNI-DN-53b79714d60d4d0df0d9c -p tcp -m tcp --dport 443 -j DNAT --to-destination 10.233.92.7:443 
+##        并且插入一条目标地址为ipvs中的vip的iptables到nat表，即：
+##          iptables -t nat -A CNI-DN-53b79714d60d4d0df0d9c -p tcp -m tcp --dport 443 -j DNAT --to-destination 10.233.0.1:443
+
+loadbalancer_apiserver_localhost: true
+# valid options are "nginx" or "haproxy"
+loadbalancer_apiserver_type: haproxy # valid values "nginx" or "haproxy"
+
+## Local loadbalancer should use this port
+## And must be set port 6443
+loadbalancer_apiserver_port: 6443
+
+## If loadbalancer_apiserver_healthcheck_port variable defined, enables proxy liveness check for nginx.
+loadbalancer_apiserver_healthcheck_port: 8081
+
+### OTHER OPTIONAL VARIABLES
+## For some things, kubelet needs to load kernel modules.  For example, dynamic kernel services are needed
+## for mounting persistent volumes into containers.  These may not be loaded by preinstall kubernetes
+## processes.  For example, ceph and rbd backed volumes.  Set to true to allow kubelet to load kernel
+## modules.
+kubelet_load_modules: true
+
+## Upstream dns servers
+# upstream_dns_servers:
+#   - 8.8.8.8
+#   - 8.8.4.4
+
+## There are some changes specific to the cloud providers
+## for instance we need to encapsulate packets with some network plugins
+## If set the possible values are either 'gce', 'aws', 'azure', 'openstack', 'vsphere', 'oci', or 'external'
+## When openstack is used make sure to source in the openstack credentials
+## like you would do when using openstack-client before starting the playbook.
+## Note: The 'external' cloud provider is not supported.
+## TODO(riverzhang): https://kubernetes.io/docs/tasks/administer-cluster/running-cloud-controller/#running-cloud-controller-manager
+# cloud_provider:
+
+## Set these proxy values in order to update package manager and docker daemon to use proxies
+# http_proxy: ""
+# https_proxy: ""
+
+## Refer to roles/kubespray-defaults/defaults/main.yml before modifying no_proxy
+# no_proxy: ""
+
+## Some problems may occur when downloading files over https proxy due to ansible bug
+## https://github.com/ansible/ansible/issues/32750. Set this variable to False to disable
+## SSL validation of get_url module. Note that kubespray will still be performing checksum validation.
+# download_validate_certs: False
+
+## If you need exclude all cluster nodes from proxy and other resources, add other resources here.
+# additional_no_proxy: ""
+
+## Certificate Management
+## This setting determines whether certs are generated via scripts.
+## Chose 'none' if you provide your own certificates.
+## Option is  "script", "none"
+## note: vault is removed
+# cert_management: script
+
+## Set to true to allow pre-checks to fail and continue deployment
+# ignore_assert_errors: false
+
+## The read-only port for the Kubelet to serve on with no authentication/authorization. Uncomment to enable.
+# kube_read_only_port: 10255
+
+## Set true to download and cache container
+download_container: true
+
+## make kubespray download container images and binaries only once and then push them to the cluster nodes. 
+download_run_once: true
+
+## make localhost the download delegate. This can be useful if cluster nodes cannot access external addresses. 
+## To use this requires that docker is installed and running on the ansible master and that the current user is either in the docker group or can do passwordless sudo, to be able to access docker.
+download_localhost: true
+
+## Deploy container engine
+# Set false if you want to deploy container engine manually.
+deploy_container_engine: true
+
+## By default, if download_once is false, kubespray will not retreive the downloaded images and files from the remote node to the local cache,
+## or use that cache to pre-provision those nodes. To force the use of the cache,
+download_force_cache: true
+
+## which is pull if only the wanted repo and tag/sha256 digest differs from that the host has
+download_always_pull: false
+
+## By default, cached images that are used to pre-provision the remote nodes will be deleted from the remote nodes after use, 
+## to save disk space. Setting download_keep_remote_cache will prevent the files from being deleted. 
+download_keep_remote_cache: true
+
+## Set Pypi repo and cert accordingly
+# pyrepo_index: https://pypi.example.com/simple
+# pyrepo_cert: /etc/ssl/certs/ca-certificates.crt
