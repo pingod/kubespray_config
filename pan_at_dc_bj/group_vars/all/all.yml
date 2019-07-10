@@ -92,8 +92,6 @@ kubelet_load_modules: true
 ## Set to true to allow pre-checks to fail and continue deployment
 # ignore_assert_errors: false
 
-## The read-only port for the Kubelet to serve on with no authentication/authorization. Uncomment to enable.
-# kube_read_only_port: 10255
 
 ## Set true to download and cache container
 download_container: true
@@ -119,6 +117,15 @@ download_always_pull: false
 ## By default, cached images that are used to pre-provision the remote nodes will be deleted from the remote nodes after use, 
 ## to save disk space. Setting download_keep_remote_cache will prevent the files from being deleted. 
 download_keep_remote_cache: true
+
+
+# Metrics Server deployment
+metrics_server_enabled: true
+# metrics_server_kubelet_insecure_tls: true
+metrics_server_metric_resolution: 60s
+metrics_server_kubelet_preferred_address_types: "InternalIP"
+## The read-only port for the Kubelet to serve on with no authentication/authorization. Uncomment to enable.
+#kube_read_only_port: 10255
 
 ## Set Pypi repo and cert accordingly
 # pyrepo_index: https://pypi.example.com/simple

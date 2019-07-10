@@ -20,7 +20,7 @@ kube_users_dir: "{{ kube_config_dir }}/users"
 kube_api_anonymous_auth: true
 
 ## Change this to use another Kubernetes version, e.g. a current beta release
-kube_version: v1.14.3
+kube_version: v1.15.0
 
 # Where the binaries will be downloaded.
 # Note: ensure that you've enough disk space (about 1G)
@@ -70,6 +70,7 @@ kube_users:
 # Choose network plugin (cilium, calico, contiv, weave or flannel. Use cni for generic cni plugin)
 # Can also be set to 'cloud', which lets the cloud provider setup appropriate routing
 kube_network_plugin: calico
+
 
 # Setting multi_networking to true will install Multus: https://github.com/intel/multus-cni
 kube_network_plugin_multus: false
@@ -177,7 +178,7 @@ dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kube
 podsecuritypolicy_enabled: false
 
 # Make a copy of kubeconfig on the host that runs Ansible in {{ inventory_dir }}/artifacts
-kubeconfig_localhost: true
+kubeconfig_localhost: false
 # Download kubectl onto the host that runs Ansible in {{ bin_dir }}
 # kubectl_localhost: false
 
@@ -218,14 +219,13 @@ persistent_volumes_enabled: false
 ## NVIDIA GPU device plugin image.
 # nvidia_gpu_device_plugin_container: "k8s.gcr.io/nvidia-gpu-device-plugin@sha256:0842734032018be107fa2490c98156992911e3e1f2a21e059ff0105b07dd8e9e"
 
-
-############ 个人后来添加的配置#################
-
 # Auto rotate the kubelet client certificates by requesting new certificates (default is true)
 kubelet_rotate_certificates: true
 
 # apply kubelet settings only to nodes and not masters
+# 开启kubelet 的staticpod功能(请注意对应目录是否已经存在)
 #kubelet_custom_flags:
+#   - "--pod-manifest-path=/etc/kubelet.d/"
 #  - "--eviction-hard=memory.available<100Mi"
 #  - "--eviction-soft-grace-period=memory.available=30s"
 #  - "--eviction-soft=memory.available<300Mi"
@@ -265,6 +265,7 @@ ingress_nginx_enabled: true
 cert_manager_enabled: true
 
 kube_image_repo: "registry.aliyuncs.com/google_containers"
+ingress_nginx_controller_image_repo: "quay.azk8s.cn/kubernetes-ingress-controller/nginx-ingress-controller"
 #kube_image_repo: "registry.cn-hangzhou.aliyuncs.com/google_containers"
 #calico_policy_image_repo: "calico/kube-controllers"
 #pod_infra_image_repo: "mirrorgooglecontainers/pause-{{ image_arch }}"
@@ -276,8 +277,8 @@ kube_image_repo: "registry.aliyuncs.com/google_containers"
 #registry_proxy_image_repo: "google_containers/kube-registry-proxy"
 #dashboard_image_repo: "mirrorgooglecontainers/kubernetes-dashboard-{{ image_arch }}"
 etcd_image_repo: "quay.mirrors.ustc.edu.cn/coreos/etcd"
-flannel_image_repo: "quay.mirrors.ustc.edu.cn/coreos/flannel"
-flannel_cni_image_repo: "quay.mirrors.ustc.edu.cn/coreos/flannel-cni"
+#flannel_image_repo: "quay.mirrors.ustc.edu.cn/coreos/flannel"
+#flannel_cni_image_repo: "quay.mirrors.ustc.edu.cn/coreos/flannel-cni"
 
 
 # 请将将要下载的文件全部放到所有节点对应目录下
