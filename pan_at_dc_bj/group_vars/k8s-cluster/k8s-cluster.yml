@@ -149,10 +149,10 @@ container_manager: docker
 ## Settings for containerized control plane (etcd/kubelet/secrets)
 etcd_deployment_type: docker
 kubelet_deployment_type: host
-## 不建议helm部署为容器,部署为容器的方式会造成helm fetch不到文件到本地
+## 不建议helm部署为容器,部署为容器的方式会造成helm fetch不到文件到本地,总之就是有很多不便
 ## 如果你使用docker的方式,那么fetch的时候可以这样helm fetch stable/mysql -d /root/.helm/;而后就可以在本地的/root/.helm/来查看chart包
 ## 你可以通过查看/usr/local/bin/helm,知道其实宿主机上的helm命令其实是一个启动docker的脚本文件
-helm_deployment_type: docker
+helm_deployment_type: host
 
 # Enable kubeadm experimental control plane
 kubeadm_control_plane: true
