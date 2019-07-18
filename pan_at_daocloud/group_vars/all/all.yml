@@ -96,6 +96,12 @@ download_localhost: True
 # Set false if you want to deploy container engine manually.
 deploy_container_engine: true
 
+## 如果关闭则直接通过docker run运行的容器将无法实现跨主机通信
+## 如果要临时跨主机通信需要添加iptables规则:
+## iptables -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
+## 在测试环境中开启,生产环境建议关闭
+docker_iptables_enabled: true
+
 ## Set Pypi repo and cert accordingly
 # pyrepo_index: https://pypi.example.com/simple
 # pyrepo_cert: /etc/ssl/certs/ca-certificates.crt
