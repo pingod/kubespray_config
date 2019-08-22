@@ -260,7 +260,9 @@ dockerproject_rh_repo_base_url: 'https://mirrors.tuna.tsinghua.edu.cn/docker/yum
 dockerproject_rh_repo_gpgkey: 'https://mirrors.tuna.tsinghua.edu.cn/docker/yum/gpg'
 
 helm_enabled: true
-helm_stable_repo_url: "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts"
+#推荐使用此仓库(https://github.com/cloudnativeapp/charts)
+# helm_stable_repo_url: "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts"
+helm_stable_repo_url: "https://apphub.aliyuncs.com"
 tiller_image_repo: "registry.aliyuncs.com/google_containers/tiller"
 dashboard_enabled: true
 registry_enabled: true
