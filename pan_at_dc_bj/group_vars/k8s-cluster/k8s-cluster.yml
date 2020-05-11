@@ -20,7 +20,7 @@ kube_users_dir: "{{ kube_config_dir }}/users"
 kube_api_anonymous_auth: true
 
 ## Change this to use another Kubernetes version, e.g. a current beta release
-kube_version: v1.15.0
+#kube_version: v1.15.0
 
 # Where the binaries will be downloaded.
 # Note: ensure that you've enough disk space (about 1G)
@@ -261,15 +261,15 @@ dockerproject_rh_repo_gpgkey: 'https://mirrors.tuna.tsinghua.edu.cn/docker/yum/g
 
 helm_enabled: true
 #推荐使用此仓库(https://github.com/cloudnativeapp/charts)
-# helm_stable_repo_url: "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts"
+#helm_stable_repo_url: "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts"
 helm_stable_repo_url: "https://apphub.aliyuncs.com"
-tiller_image_repo: "registry.aliyuncs.com/google_containers/tiller"
+#tiller_image_repo: "registry.aliyuncs.com/google_containers/tiller"
 dashboard_enabled: true
 registry_enabled: true
 ingress_nginx_enabled: true
 cert_manager_enabled: true
 
-kube_image_repo: "registry.aliyuncs.com/google_containers"
+#kube_image_repo: "registry.aliyuncs.com/google_containers"
 ingress_nginx_controller_image_repo: "quay.azk8s.cn/kubernetes-ingress-controller/nginx-ingress-controller"
 #kube_image_repo: "registry.cn-hangzhou.aliyuncs.com/google_containers"
 #calico_policy_image_repo: "calico/kube-controllers"
