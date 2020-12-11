@@ -27,9 +27,9 @@ docker_log_opts: "--log-opt max-size=50m --log-opt max-file=5"
 docker_bin_dir: "/usr/bin"
 
 # 由于我是用macos上的docker来下载镜像。如果非macos且作为下载主机建议将下面内容注释掉
-image_pull_command_on_localhost: "/usr/local/bin/docker pull"
-image_save_command_on_localhost: "/usr/local/bin/docker save {{ image_reponame }} | gzip -{{ download_compress }} > {{ image_path_cached }}"
-image_info_command_on_localhost: "/usr/local/bin/docker images"
+#image_pull_command_on_localhost: "/usr/local/bin/docker pull"
+#image_save_command_on_localhost: "/usr/local/bin/docker save {{ image_reponame }} | gzip -{{ download_compress }} > {{ image_path_cached }}"
+#image_info_command_on_localhost: "/usr/local/bin/docker images"
 
 
 # keep docker packages after installation; speeds up repeated ansible provisioning runs when '1'

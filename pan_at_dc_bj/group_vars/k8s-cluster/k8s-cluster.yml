@@ -131,7 +131,7 @@ dns_mode: coredns
 # manual_dns_server: 10.x.x.x
 # Enable nodelocal dns cache
 enable_nodelocaldns: true
-nodelocaldns_ip: 169.254.25.10
+#nodelocaldns_ip: 169.254.25.10
 
 # Can be docker_dns, host_resolvconf or none
 resolvconf_mode: docker_dns
@@ -181,7 +181,7 @@ dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kube
 podsecuritypolicy_enabled: false
 
 # Make a copy of kubeconfig on the host that runs Ansible in {{ inventory_dir }}/artifacts
-kubeconfig_localhost: false
+kubeconfig_localhost: true
 # Download kubectl onto the host that runs Ansible in {{ bin_dir }}
 # kubectl_localhost: false
 
@@ -270,7 +270,7 @@ ingress_nginx_enabled: true
 cert_manager_enabled: true
 
 #kube_image_repo: "registry.aliyuncs.com/google_containers"
-ingress_nginx_controller_image_repo: "quay.azk8s.cn/kubernetes-ingress-controller/nginx-ingress-controller"
+#ingress_nginx_controller_image_repo: "quay.azk8s.cn/kubernetes-ingress-controller/nginx-ingress-controller"
 #kube_image_repo: "registry.cn-hangzhou.aliyuncs.com/google_containers"
 #calico_policy_image_repo: "calico/kube-controllers"
 #pod_infra_image_repo: "mirrorgooglecontainers/pause-{{ image_arch }}"
@@ -281,7 +281,7 @@ ingress_nginx_controller_image_repo: "quay.azk8s.cn/kubernetes-ingress-controlle
 #dnsautoscaler_image_repo: "mirrorgooglecontainers/cluster-proportional-autoscaler-{{ image_arch }}"
 #registry_proxy_image_repo: "google_containers/kube-registry-proxy"
 #dashboard_image_repo: "mirrorgooglecontainers/kubernetes-dashboard-{{ image_arch }}"
-etcd_image_repo: "quay.mirrors.ustc.edu.cn/coreos/etcd"
+#etcd_image_repo: "quay.mirrors.ustc.edu.cn/coreos/etcd"
 #flannel_image_repo: "quay.mirrors.ustc.edu.cn/coreos/flannel"
 #flannel_cni_image_repo: "quay.mirrors.ustc.edu.cn/coreos/flannel-cni"
 
