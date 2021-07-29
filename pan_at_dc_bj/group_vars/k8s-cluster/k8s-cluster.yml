@@ -69,8 +69,7 @@ kube_users:
 
 # Choose network plugin (cilium, calico, contiv, weave or flannel. Use cni for generic cni plugin)
 # Can also be set to 'cloud', which lets the cloud provider setup appropriate routing
-kube_network_plugin: calico
-
+kube_network_plugin: cilium
 
 # Setting multi_networking to true will install Multus: https://github.com/intel/multus-cni
 kube_network_plugin_multus: false
@@ -270,8 +269,8 @@ ingress_nginx_enabled: true
 cert_manager_enabled: true
 
 #kube_image_repo: "registry.aliyuncs.com/google_containers"
+kube_image_repo: "registry.cn-hangzhou.aliyuncs.com/google_containers"
 #ingress_nginx_controller_image_repo: "quay.azk8s.cn/kubernetes-ingress-controller/nginx-ingress-controller"
-#kube_image_repo: "registry.cn-hangzhou.aliyuncs.com/google_containers"
 #calico_policy_image_repo: "calico/kube-controllers"
 #pod_infra_image_repo: "mirrorgooglecontainers/pause-{{ image_arch }}"
 #kubedns_image_repo: "google_containers/k8s-dns-kube-dns-{{ image_arch }}"

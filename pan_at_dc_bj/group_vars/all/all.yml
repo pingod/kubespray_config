@@ -1,4 +1,8 @@
 ---
+#
+kube_network_plugin: cilium
+cilium_version: v1.10.0
+
 ## Directory where etcd data stored
 etcd_data_dir: /var/lib/etcd
 
@@ -68,8 +72,8 @@ kubelet_load_modules: true
 # cloud_provider:
 
 ## Set these proxy values in order to update package manager and docker daemon to use proxies
-# http_proxy: ""
-# https_proxy: ""
+#http_proxy: "192.168.70.142:1081"
+#https_proxy: "192.168.70.142:1081"
 
 ## Refer to roles/kubespray-defaults/defaults/main.yml before modifying no_proxy
 # no_proxy: ""
@@ -121,7 +125,7 @@ download_keep_remote_cache: true
 
 # Metrics Server deployment
 metrics_server_enabled: true
-# metrics_server_kubelet_insecure_tls: true
+metrics_server_kubelet_insecure_tls: true
 metrics_server_metric_resolution: 60s
 metrics_server_kubelet_preferred_address_types: "InternalIP"
 ## The read-only port for the Kubelet to serve on with no authentication/authorization. Uncomment to enable.
@@ -130,3 +134,4 @@ metrics_server_kubelet_preferred_address_types: "InternalIP"
 ## Set Pypi repo and cert accordingly
 # pyrepo_index: https://pypi.example.com/simple
 # pyrepo_cert: /etc/ssl/certs/ca-certificates.crt
+
